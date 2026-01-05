@@ -13,7 +13,6 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
-. "$HOME/.cargo/env"
 
 export HOMEBREW_CURL_RETRIES=5
 export HOMEBREW_CURL_SPEED_LIMIT=10        # Accept as low as 10 bytes/sec

@@ -265,15 +265,15 @@
   "Setup fonts - works with daemon mode."
   (when (display-graphic-p)
     (set-face-attribute 'default nil
-                        :family "Monaco"
-                        :height 140)
+                        :family "Monaco Nerd Font"
+                        :height 80)
     (set-face-attribute 'fixed-pitch nil
-                        :family "Monaco"
-                        :height 140)
-    (when (find-font (font-spec :name "SF Pro Display"))
+                        :family "Monaco Nerd Font"
+                        :height 80)
+    (when (find-font (font-spec :name "Fira Code Nerd Font"))
       (set-face-attribute 'variable-pitch nil
-                          :family "SF Pro Display"
-                          :height 160))))
+                          :family "Fira Code Nerd Font"
+                          :height 80))))
 
 ;; Apply fonts correctly for both daemon and normal mode
 (if (daemonp)

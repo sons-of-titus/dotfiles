@@ -47,6 +47,9 @@ alias config='/opt/homebrew/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 eval "$(direnv hook zsh)"
 
+alias icat="kitten icat"
+
+
 # Emacs aliases
 alias e='emacs -nw'
 alias ec='emacsclient -nw'
@@ -271,4 +274,4 @@ p() {
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-alias config='/usr/bin/git --git-dir=/Users/mohamedabdellahi/.dotfiles/ --work-tree=/Users/mohamedabdellahi'
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
