@@ -6,7 +6,8 @@ autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' (%b)'
 setopt PROMPT_SUBST
-PROMPT='%F{cyan}%n@%m%f %F{yellow}%1~%f%F{green}${vcs_info_msg_0_}%f %# '
+PS1='%F{blue}%~ %(?.%F{green}.%F{red})%#%f '
+
 
 # History settings
 HISTSIZE=10000
@@ -275,3 +276,7 @@ p() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/mourad/.sdkman"
+[[ -s "/home/mourad/.sdkman/bin/sdkman-init.sh" ]] && source "/home/mourad/.sdkman/bin/sdkman-init.sh"
