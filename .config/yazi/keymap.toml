@@ -1,0 +1,60 @@
+[[mgr.prepend_keymap]]
+on   = [ "g", "l" ]
+run  = "plugin open-git-remote"
+desc = "open git remote url"
+
+[[mgr.prepend_keymap]]
+on = ["C"]
+run = "plugin ouch"
+desc = "Compress with ouch"
+
+[[mgr.append_keymap]]
+on = ["R", "p", "p"]
+run = "plugin sudo -- paste"
+desc = "sudo paste"
+
+[[mgr.append_keymap]]
+on = ["R", "P"]
+run = "plugin sudo -- paste --force"
+desc = "sudo paste"
+
+[[mgr.append_keymap]]
+on = ["R", "r"]
+run = "plugin sudo -- rename"
+desc = "sudo rename"
+
+[[mgr.append_keymap]]
+on = ["R", "p", "l"]
+run = "plugin sudo -- link"
+desc = "sudo link"
+
+[[mgr.append_keymap]]
+on = ["R", "p", "r"]
+run = "plugin sudo -- link --relative"
+desc = "sudo link relative path"
+
+[[mgr.append_keymap]]
+on = ["R", "p", "L"]
+run = "plugin sudo -- hardlink"
+desc = "sudo hardlink"
+
+[[mgr.append_keymap]]
+on = ["R", "a"]
+run = "plugin sudo -- create"
+desc = "sudo create"
+
+[[mgr.append_keymap]]
+on = ["R", "d"]
+run = "plugin sudo -- remove"
+desc = "sudo trash"
+
+[[mgr.append_keymap]]
+on = ["R", "D"]
+run = "plugin sudo -- remove --permanently"
+desc = "sudo delete"
+
+
+
+[[mgr.append_keymap]]
+on = "<C-y>"
+run = ["plugin wl-clipboard"]

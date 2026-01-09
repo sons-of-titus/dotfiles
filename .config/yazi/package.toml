@@ -1,0 +1,39 @@
+[[plugin.deps]]
+use = "TD-Sky/sudo"
+rev = "86205aa"
+hash = "9628b660afb192d32f2ea5f6634d3e72"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "cfb9140"
+hash = "b5067143415bd2d46c0dfa57319ddcef"
+
+[[plugin.deps]]
+use = "wylie102/duckdb"
+rev = "3f8c863"
+hash = "87b9233a74325e95011670ed20bbd0d4"
+
+[[plugin.deps]]
+use = "Shallow-Seek/djvu-view"
+rev = "b281c7f"
+hash = "8205db73f10e23dbfe3436e7bec7b8b2"
+
+[[plugin.deps]]
+use = "grappas/wl-clipboard"
+rev = "e9a38e4"
+hash = "6b8e5d6b09626facec713923d3ddb54b"
+
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "90a1652"
+hash = "7a83bfab51d1d2ba6558cc56bd52539a"
+
+[[plugin.deps]]
+use = "larry-oates/open-git-remote"
+rev = "95b3043"
+hash = "8d17dcc063217b558a08ed8bb5e9e8ad"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "4a1802a"
+hash = "7a870f143a4026a893ea3123be711e7a"

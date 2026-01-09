@@ -1,0 +1,73 @@
+[opener]
+edit = [
+    { run = 'nvim "$@"', block = true, desc = "nvim" },
+]
+
+sudo_edit = [
+    { run = 'sudo nvim "$@"', block = true, desc = "sudo nvim" },
+]
+
+# PDF files - open with zathura
+pdf = [
+    { run = 'zathura "$@"', orphan = true, desc = "zathura" },
+]
+
+epub = [
+    { run = 'foliate "$@"', orphan = true, desc = "foliate"},
+]
+
+extract = [
+	{ run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
+]
+
+video = [
+    { run = 'mpv "$@"', orphan = true, desc = "mpv" },
+]
+
+[open]
+rules = [
+    { mime = "text/*", use = "edit" },
+    { mime = "application/json", use = "edit" },
+    { mime = "application/xml", use = "edit" },
+    { mime = "application/x-yaml", use = "edit" },
+    { mime = "application/pdf", use = "pdf" },
+    { mime = "application/epub+zip", use = "epub" },
+    { mime = "video/*", use = "video" },
+    { mime = "audio/*", use = "video" }, 
+    
+]
+
+[plugin]
+prepend_previewers = [
+   
+    { mime = "{audio,video,image}/*", run = "mediainfo"},
+    { mime = "application/subrip", run = "mediainfo" },
+    # Adobe Illustrator, Adobe Photoshop is image/adobe.photoshop, already handled above
+    { mime = "application/postscript", run = "mediainfo" },
+    { mime = "application/{*zip,tar,bzip1,7z*,rar,xz,zstd,java-archive}", run  = "ouch"},
+    { name = "*.csv", run = "duckdb" },  
+    { name = "*.tsv", run = "duckdb" },  
+    { name = "*.json", run = "duckdb" },  
+    { name = "*.parquet", run = "duckdb" },  
+    { name = "*.txt", run = "duckdb" },  
+    { name = "*.xlsx", run = "duckdb" },  
+    { name = "*.db", run = "duckdb" },
+    { name = "*.duckdb", run = "duckdb" },
+    { name = "*.{djvu,djv}", run  = "djvu-view"}
+]
+
+prepend_preloaders = [  
+  { name = "*.csv", run = "duckdb", multi = false },  
+  { name = "*.tsv", run = "duckdb", multi = false },  
+  { name = "*.json", run = "duckdb", multi = false },  
+  { name = "*.parquet", run = "duckdb", multi = false },
+  { name = "*.txt", run = "duckdb", multi = false },  
+  { name = "*.xlsx", run = "duckdb", multi = false },
+  # Replace magick, image, video with mediainfo
+  { mime = "{audio,video,image}/*", run = "mediainfo" },
+  { mime = "application/subrip", run = "mediainfo" },
+    # Adobe Illustrator, Adobe Photoshop is image/adobe.photoshop, already handled above
+  { mime = "application/postscript", run = "mediainfo" },
+
+]
+
