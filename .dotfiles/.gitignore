@@ -20,9 +20,14 @@
 .config/doom/.emacs.d/straight/
 .config/doom/.emacs.d/eln-cache/
 
-# Hyprland (managed by caelestia)
+# Caelestia (managed configs)
+.local/share/caelestia/.git/
+.local/share/caelestia/.github/
 .local/share/caelestia/hypr/scheme/current.conf
 .local/share/caelestia/hypr/scripts/
+.local/share/caelestia/fish/fish_variables
+.local/share/caelestia/vscode/caelestia-vscode-integration/node_modules/
+.local/share/caelestia/zen/caelestia-firefox-integration/node_modules/
 
 # General cache and temp files
 .cache/
