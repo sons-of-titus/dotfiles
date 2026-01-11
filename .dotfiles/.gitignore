@@ -19,6 +19,7 @@
 .config/doom/.emacs.d/.test/
 .config/doom/.emacs.d/straight/
 .config/doom/.emacs.d/eln-cache/
+.config/doom/config.el  # Generated from config.org (literate config)
 
 # Caelestia (managed configs)
 .local/share/caelestia/.git/

@@ -1,0 +1,453 @@
+#+title: Doom Emacs Configuration
+#+author: mourad
+#+description: Literate configuration for Doom Emacs with evil mode enhancements
+
+* Basic Settings
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** Fonts
+
+Configure custom fonts for Doom Emacs.
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "Monaco Nerd Font" :size 15)
+      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 15)
+      doom-big-font (font-spec :family "JetBrains Mono Nerd Font" :size 20))
+#+end_src
+
+** Theme and Display
+
+Set the theme and line number display style.
+
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-one)
+(setq display-line-numbers-type t)
+#+end_src
+
+** Org Directory
+
+Configure the default org directory.
+
+#+begin_src emacs-lisp
+(setq org-directory "~/org/")
+#+end_src
+
+** Environment Variables
+
+Set environment variables for better tool integration.
+
+#+begin_src emacs-lisp
+(setenv "PAGER" "less")
+#+end_src
+
+** Spell Checking
+
+Configure spell checking with Hunspell and the installed dictionary.
+
+#+begin_src emacs-lisp
+(after! spell
+  (setq ispell-program-name "hunspell"
+        ispell-dictionary "en_US"
+        ispell-local-dictionary "en_US"
+        ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8))))
+#+end_src
+
+* Evil Mode Configuration
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** Search Behavior
+
+Configure smart case search and better visual feedback for evil mode.
+
+#+begin_src emacs-lisp
+(after! evil
+  ;; Use smart case search (case-insensitive unless uppercase)
+  (setq evil-search-module 'evil-search
+        evil-ex-search-case 'smart
+        evil-ex-substitute-global nil
+        evil-ex-substitute-case 'smart
+        ;; Better visual feedback
+        evil-ex-visual-char-range t
+        ;; Incremental search highlighting
+        evil-ex-search-highlight-all t
+        ;; Better undo behavior
+        evil-want-fine-undo t
+        ;; Keep visual selection after indent
+        evil-indent-convert-tabs nil
+        ;; Better word boundaries
+        evil-symbol-word-search t))
+#+end_src
+
+** Visual Selection
+
+Configure cursor styles for different evil states.
+
+#+begin_src emacs-lisp
+(after! evil
+  (setq evil-visual-state-cursor 'box
+        evil-normal-state-cursor 'box
+        evil-insert-state-cursor 'bar
+        evil-replace-state-cursor 'underline
+        evil-operator-state-cursor 'box))
+#+end_src
+
+** Visual Line Navigation
+
+Enable respect for visual line mode.
+
+#+begin_src emacs-lisp
+(after! evil
+  (setq evil-respect-visual-line-mode t))
+#+end_src
+
+** Visual Block Editing
+
+Configure visual block editing behavior.
+
+#+begin_src emacs-lisp
+(after! evil
+  (setq evil-visual-block-fill-column nil))
+#+end_src
+
+** Evil Escape
+
+Configure quick escape from insert mode using "jk" sequence.
+
+#+begin_src emacs-lisp
+(after! evil-escape
+  (setq evil-escape-key-sequence "jk"
+        evil-escape-delay 0.2))
+#+end_src
+
+* Keybindings
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** Insert Mode Navigation
+
+Better navigation in insert mode with familiar keybindings.
+
+#+begin_src emacs-lisp
+(map! :i "C-h" #'delete-backward-char
+      :i "C-w" #'evil-delete-backward-word
+      :i "C-u" #'evil-delete-back-to-indentation)
+#+end_src
+
+** Window Navigation
+
+Quick window navigation using leader key.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Window left"  "w h" #'evil-window-left
+      :desc "Window down"  "w j" #'evil-window-down
+      :desc "Window up"    "w k" #'evil-window-up
+      :desc "Window right" "w l" #'evil-window-right)
+#+end_src
+
+** Code Navigation
+
+Enhanced code navigation bindings.
+
+#+begin_src emacs-lisp
+(map! :n "gx" #'xref-find-definitions
+      :n "gX" #'xref-find-references)
+#+end_src
+
+** Buffer Operations
+
+Quick buffer switching and management.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Kill buffer" "b k" #'kill-buffer)
+#+end_src
+
+** Code Folding
+
+Evil mode code folding keybindings.
+
+#+begin_src emacs-lisp
+(map! :n "za" #'evil-toggle-fold
+      :n "zR" #'evil-open-folds
+      :n "zM" #'evil-close-folds
+      :n "zo" #'evil-open-fold
+      :n "zc" #'evil-close-fold)
+#+end_src
+
+** Line Operations
+
+Quick line operations.
+
+#+begin_src emacs-lisp
+(map! :n "Y" #'evil-yank-line)
+#+end_src
+
+** Edit Location Navigation
+
+Jump to last edit locations.
+
+#+begin_src emacs-lisp
+(map! :n "g;" #'evil-jump-backward
+      :n "g," #'evil-jump-forward)
+#+end_src
+
+** Search and Replace
+
+Better search and replace workflow.
+
+#+begin_src emacs-lisp
+(map! :n "n" #'evil-ex-search-next
+      :n "N" #'evil-ex-search-previous
+      :v "//" #'evil-ex-search)
+#+end_src
+
+** Commenting
+
+Quick comment toggling using leader key.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Comment line"    "c l" #'comment-line
+      :desc "Comment region"  "c R" #'comment-region)
+#+end_src
+
+** File Operations
+
+Quick file operations.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Save file" "f s" #'save-buffer
+      :desc "Save all"  "f a" #'save-some-buffers)
+#+end_src
+
+** Error Navigation
+
+Navigate between errors and diagnostics.
+
+#+begin_src emacs-lisp
+(map! :n "]e" #'flycheck-next-error
+      :n "[e" #'flycheck-previous-error
+      :n "]d" #'lsp-ui-flycheck-list
+      :n "[d" #'lsp-ui-flycheck-list)
+#+end_src
+
+** Project Operations
+
+Quick project file and project switching.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Find file in project" "p f" #'projectile-find-file
+      :desc "Switch project"      "p s" #'projectile-switch-project)
+#+end_src
+
+** Help
+
+Quick access to help functions.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Describe key" "h k" #'describe-key
+      :desc "Describe function" "h f" #'describe-function
+      :desc "Describe variable" "h v" #'describe-variable)
+#+end_src
+
+** Code Formatting
+
+Format buffer using Doom's format module.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Format buffer" "f =" #'+format/buffer)
+#+end_src
+
+** Macro Execution
+
+Quick macro recording and execution.
+
+#+begin_src emacs-lisp
+(map! :n "Q" #'evil-execute-macro)
+#+end_src
+
+** Code Evaluation
+
+Quick code evaluation for REPL languages.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Eval buffer"    "e b" #'eval-buffer
+      :desc "Eval region"     "e r" #'eval-region
+      :desc "Eval last sexp"  "e l" #'eval-last-sexp)
+#+end_src
+
+* Language Server Protocol
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** LSP Integration
+
+Better LSP integration with evil mode.
+
+#+begin_src emacs-lisp
+(after! lsp
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-position 'at-point
+        lsp-ui-doc-delay 0.5
+        lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-delay 0.5
+        lsp-idle-delay 0.5
+        lsp-log-io nil)
+  (map! :n "gR" #'lsp-rename))
+#+end_src
+
+* Debugging
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** DAP (Debug Adapter Protocol) Configuration
+
+Configure debugging with DAP mode for better development experience. The debugger module provides DAP support.
+
+#+begin_src emacs-lisp
+(after! dap-mode
+  ;; Enable mouse support and better UI
+  (setq dap-auto-configure-features '(sessions locals breakpoints expressions tooltip)
+        dap-ui-controls-mode t
+        dap-ui-show-many-frames t
+        dap-ui-buttons-mode t
+        dap-breakpoints-file (expand-file-name "dap-breakpoints" doom-cache-dir))
+  ;; Keybindings for debugging
+  (map! :leader
+        :desc "Debug start"        "d s" #'dap-debug
+        :desc "Debug restart"     "d r" #'dap-debug-restart
+        :desc "Debug stop"         "d S" #'dap-debug-stop
+        :desc "Debug continue"     "d c" #'dap-debug-continue
+        :desc "Debug step over"    "d n" #'dap-next
+        :desc "Debug step into"    "d i" #'dap-step-in
+        :desc "Debug step out"     "d o" #'dap-step-out
+        :desc "Toggle breakpoint"  "d b" #'dap-breakpoint-toggle
+        :desc "Add conditional bp" "d C" #'dap-breakpoint-condition
+        :desc "Add logpoint"       "d l" #'dap-breakpoint-log-message
+        :desc "Show debug sessions" "d u" #'dap-ui-sessions))
+#+end_src
+
+* Terminal Integration
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** VTerm Keybindings
+
+Better terminal integration with vterm.
+
+#+begin_src emacs-lisp
+(after! vterm
+  (setq vterm-max-scrollback 10000)
+  (map! :map vterm-mode-map
+        :i "C-w" #'vterm-send-C-w
+        :i "C-u" #'vterm-send-C-u
+        :i "C-y" #'vterm-send-C-y))
+#+end_src
+
+* Editor Enhancements
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** Better Indentation
+
+Configure smarter indentation behavior.
+
+#+begin_src emacs-lisp
+(setq-default tab-width 2
+              indent-tabs-mode nil
+              fill-column 80)
+#+end_src
+
+** Recent Files
+
+Better recent file management.
+
+#+begin_src emacs-lisp
+(after! recentf
+  (setq recentf-max-saved-items 100
+        recentf-exclude '("/tmp/" "/var/tmp/" ".*\\.git/.*" ".*\\.cache/.*")))
+#+end_src
+
+** Better Scrolling
+
+Smooth scrolling configuration.
+
+#+begin_src emacs-lisp
+(setq scroll-margin 0
+      scroll-step 1
+      scroll-conservatively 101
+      scroll-preserve-screen-position t)
+#+end_src
+
+** Auto-save Configuration
+
+Configure auto-save behavior for better safety.
+
+#+begin_src emacs-lisp
+(setq auto-save-default t
+      auto-save-timeout 20
+      auto-save-interval 200
+      make-backup-files nil
+      create-lockfiles nil)
+#+end_src
+
+** Better Completion
+
+Improve completion experience.
+
+#+begin_src emacs-lisp
+(after! corfu
+  (setq corfu-auto t
+        corfu-auto-delay 0.2
+        corfu-auto-prefix 2
+        corfu-popupinfo-delay 0.5
+        corfu-popupinfo-max-width 80))
+#+end_src
+
+** Magit Enhancements
+
+Better git integration with magit.
+
+#+begin_src emacs-lisp
+(after! magit
+  (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
+        magit-diff-refine-hunk t
+        magit-save-repository-buffers 'dontask))
+#+end_src
+
+* Notes
+:PROPERTIES:
+:header-args: :tangle config.el :comments link
+:END:
+
+** Text Objects
+
+Function text objects (af/if) are available through tree-sitter when enabled for the language.
+
+** Undo Navigation
+
+Configure undo-fu for better undo/redo behavior. This prevents warnings when trying to redo without undo steps.
+
+#+begin_src emacs-lisp
+(after! undo-fu
+  (setq undo-fu-ignore-keyboard-quit t
+        undo-fu-allow-undo-in-region t))
+#+end_src
